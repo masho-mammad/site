@@ -1,0 +1,275 @@
+import { useState, useEffect } from 'react'
+import { Menu, X, Search, Instagram, Send, Twitter, Youtube, MessageCircle, Moon, Sun, Car } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+
+export default function Component() {
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isDarkMode, setIsDarkMode] = useState(false)
+  const [isContactOpen, setIsContactOpen] = useState(false)
+
+  useEffect(() => {
+    document.body.classList.toggle('dark', isDarkMode)
+  }, [isDarkMode])
+
+  const cars = [
+    { name: 'Luxury Sedan', price: '$100/day', image: '/placeholder.svg?height=200&width=300' },
+    { name: 'Sports Car', price: '$150/day', image: '/placeholder.svg?height=200&width=300' },
+    { name: 'SUV', price: '$120/day', image: '/placeholder.svg?height=200&width=300' },
+    { name: 'Electric Car', price: '$130/day', image: '/placeholder.svg?height=200&width=300' },
+    { name: 'Convertible', price: '$140/day', image: '/placeholder.svg?height=200&width=300' },
+    { name: 'Minivan', price: '$110/day', image: '/placeholder.svg?height=200&width=300' },
+  ]
+
+  return (
+    <div className={`min-h-screen ${isDarkMode ? 'dark bg-gray-900 text-white' : 'bg-cream text-gray-900'} transition-colors duration-300`}>
+      {/* Header */}
+      <header className="border-b border-gray-200 dark:border-gray-800">
+        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+          <div className="flex items-center">
+            <motion.button
+              onClick={() => setIsDarkMode(!isDarkMode)}
+              className="mr-4 text-gray-600 dark:text-gray-300 hover:text-light-blue dark:hover:text-light-blue transition-colors duration-300"
+              whileHover={{ scale: 1.1, rotate: 180 }}
+            >
+              {isDarkMode ? <Sun className="w-6 h-6" /> : <Moon className="w-6 h-6" />}
+            </motion.button>
+            <button 
+              className="md:hidden text-gray-600 dark:text-gray-300 hover:text-light-blue dark:hover:text-light-blue transition-colors duration-300"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+            >
+              {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            </button>
+          </div>
+          <motion.h1 
+            className="text-3xl font-bold"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            whileHover={{ scale: 1.05 }}
+          >
+            <motion.span
+              className="inline-block"
+              animate={{
+                color: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FF6B6B'],
+                transition: { duration: 4, repeat: Infinity }
+              }}
+            >
+              Z
+            </motion.span>
+            <motion.span
+              className="inline-block"
+              animate={{
+                color: ['#4ECDC4', '#45B7D1', '#FF6B6B', '#4ECDC4'],
+                transition: { duration: 4, repeat: Infinity, delay: 0.5 }
+              }}
+            >
+              o
+            </motion.span>
+            <motion.span
+              className="inline-block"
+              animate={{
+                color: ['#45B7D1', '#FF6B6B', '#4ECDC4', '#45B7D1'],
+                transition: { duration: 4, repeat: Infinity, delay: 1 }
+              }}
+            >
+              g
+            </motion.span>
+            <motion.span
+              className="inline-block"
+              animate={{
+                color: ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FF6B6B'],
+                transition: { duration: 4, repeat: Infinity, delay: 1.5 }
+              }}
+            >
+              h
+            </motion.span>
+            <motion.span
+              className="inline-block"
+              animate={{
+                color: ['#4ECDC4', '#45B7D1', '#FF6B6B', '#4ECDC4'],
+                transition: { duration: 4, repeat: Infinity, delay: 2 }
+              }}
+            >
+              i
+            </motion.span>
+          </motion.h1>
+          <nav className="hidden md:flex space-x-6">
+            {['Home', 'Cars', 'About', 'Contact'].map((item) => (
+              <motion.a 
+                key={item} 
+                href="#" 
+                className="text-gray-600 dark:text-gray-300 hover:text-light-blue dark:hover:text-light-blue transition-colors duration-300"
+                whileHover={{ scale: 1.1, color: '#45B7D1' }}
+              >
+                {item}
+              </motion.a>
+            ))}
+          </nav>
+        </div>
+      </header>
+
+      {/* Mobile Menu */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <motion.div 
+            className="md:hidden bg-cream dark:bg-gray-800 p-4"
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}
+          >
+            {['Home', 'Cars', 'About', 'Contact'].map((item) => (
+              <motion.a 
+                key={item} 
+                href="#" 
+                className="block py-2 text-gray-600 dark:text-gray-300 hover:text-light-blue dark:hover:text-light-blue transition-colors duration-300"
+                whileHover={{ scale: 1.05, x: 10 }}
+              >
+                {item}
+              </motion.a>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Hero Section */}
+      <section className="container mx-auto px-4 py-16 text-center">
+        <motion.h2 
+          className="text-5xl md:text-7xl font-bold mb-6 text-light-blue dark:text-light-blue"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          The Future of Car Rental
+        </motion.h2>
+        <motion.p 
+          className="text-xl text-gray-600 dark:text-gray-400 mb-8"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          Experience the next generation of driving with Zoghi
+        </motion.p>
+        <motion.div 
+          className="flex justify-center items-center space-x-4"
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.6 }}
+        >
+          <motion.button 
+            className="px-8 py-3 bg-light-blue text-white font-bold rounded-full hover:bg-orange-400 transition-colors duration-300"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Rent Now
+          </motion.button>
+          <motion.div className="relative">
+            <input 
+              type="text" 
+              placeholder="Search cars..." 
+              className="px-4 py-2 rounded-full bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 focus:outline-none focus:ring-2 focus:ring-light-blue"
+            />
+            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          </motion.div>
+        </motion.div>
+      </section>
+
+      {/* Car Rental Options */}
+      <section className="container mx-auto px-4 py-16">
+        <h3 className="text-3xl font-bold mb-8 text-center text-gray-800 dark:text-gray-200">Our Rental Fleet</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {cars.map((car, index) => (
+            <motion.div 
+              key={index}
+              className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.1 * index }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <img src={car.image} alt={car.name} className="w-full h-48 object-cover" />
+              <div className="p-4">
+                <h4 className="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200">{car.name}</h4>
+                <p className="text-light-blue font-bold">{car.price}</p>
+                <motion.button 
+                  className="mt-4 px-4 py-2 bg-light-blue text-white rounded-full hover:bg-orange-400 transition-colors duration-300"
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                >
+                  Book Now
+                </motion.button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-cream dark:bg-gray-800 py-8">
+        <div className="container mx-auto px-4">
+          <div className="flex justify-center space-x-6">
+            {[
+              { icon: <Instagram />, color: 'text-pink-500' },
+              { icon: <Send />, color: 'text-light-blue' },
+              { icon: <Twitter />, color: 'text-blue-400' },
+              { icon: <Youtube />, color: 'text-red-500' },
+            ].map((social, index) => (
+              <motion.a
+                key={index}
+                href="#"
+                className={`${social.color} hover:opacity-80 transition-opacity duration-300`}
+                whileHover={{ scale: 1.2, rotate: 5 }}
+                whileTap={{ scale: 0.9 }}
+              >
+                {social.icon}
+              </motion.a>
+            ))}
+          </div>
+          <p className="text-center text-gray-600 dark:text-gray-400 mt-6">© 2023 Zoghi. All rights reserved.</p>
+        </div>
+      </footer>
+
+      {/* Floating Contact Button */}
+      <motion.div
+        className="fixed bottom-4 right-4"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 1 }}
+      >
+        <motion.button
+          className="bg-orange-400 text-white p-4 rounded-full shadow-lg"
+          onClick={() => setIsContactOpen(!isContactOpen)}
+          whileHover={{ scale: 1.1 }}
+          whileTap={{ scale: 0.9 }}
+        >
+          <MessageCircle />
+        </motion.button>
+      </motion.div>
+
+      {/* Contact Form */}
+      <AnimatePresence>
+        {isContactOpen && (
+          <motion.div
+            className="fixed bottom-20 right-4 bg-white dark:bg-gray-800 p-4 rounded-lg shadow-lg w-80"
+            initial={{ opacity: 0, y: 20, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            transition={{ duration: 0.3 }}
+          >
+            <h4 className="text-lg font-semibold mb-4 text-gray-800 dark:text-gray-200">Contact Support</h4>
+            <input type="text" placeholder="Name" className="w-full p-2 mb-2 border rounded text-gray-800" />
+            <input type="email" placeholder="Email" className="w-full p-2 mb-2 border rounded text-gray-800" />
+            <textarea placeholder="Message" className="w-full p-2 mb-2 border rounded text-gray-800" rows={3}></textarea>
+            <motion.button
+              className="w-full p-2 bg-light-blue text-white rounded hover:bg-orange-400 transition-colors duration-300"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+            >
+              Send
+            </motion.button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  )
+}
